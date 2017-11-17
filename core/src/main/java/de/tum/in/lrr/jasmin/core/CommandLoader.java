@@ -70,7 +70,7 @@ public class CommandLoader {
         this.defaultpackage = defaultpackage;
         this.commands = new Hashtable<>();
         System.out.println("CommandLoader loading...");
-        URL url = getClass().getResource("../../" + defaultpackage.replace(".", "/"));
+        URL url = ClassLoader.getSystemResource(defaultpackage.replace(".", "/"));
         File file;
         if (url != null) {
             System.out.println("looks like you are not starting from a jar-package");
