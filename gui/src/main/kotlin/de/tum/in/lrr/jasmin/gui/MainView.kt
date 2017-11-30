@@ -1,21 +1,27 @@
 package de.tum.`in`.lrr.jasmin.gui
 
-import javafx.beans.property.SimpleIntegerProperty
-import javafx.scene.control.Label
+import javafx.scene.control.Button
 import javafx.scene.layout.BorderPane
+import org.fxmisc.flowless.VirtualizedScrollPane
+import org.fxmisc.richtext.CodeArea
+import org.fxmisc.richtext.LineNumberFactory
 import tornadofx.View
-import tornadofx.bind
+import tornadofx.action
 
 class MainView : View() {
     override val root: BorderPane by fxml("/views/main_view.fxml")
-    val counterLabel: Label by fxid()
-    val counter = SimpleIntegerProperty()
+    private val buttonRun: Button by fxid()
+    private val codeArea = CodeArea()
 
     init {
-        counterLabel.bind(counter)
-    }
+        title = "Jasmin"
+        primaryStage.isMaximized = true
 
-    fun increment() {
-        counter.value += 1
+        codeArea.paragraphGraphicFactory = LineNumberFactory.get(codeArea)
+        root.center = VirtualizedScrollPane(codeArea)
+
+        buttonRun.action {
+            println("Run:\n" + codeArea.text)
+        }
     }
 }
