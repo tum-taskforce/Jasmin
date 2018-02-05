@@ -18,6 +18,11 @@ public class Jasmin {
         data.setParser(parser);
     }
 
+    public void reset() {
+        data.setInstructionPointer(0);
+        data.clear();
+    }
+
     public void parse(String[] code) {
         parser.clearCache(code.length);
         labels.clear();

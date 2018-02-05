@@ -1,5 +1,6 @@
 package de.tum.`in`.lrr.jasmin.gui
 
+import de.tum.`in`.lrr.jasmin.core.Jasmin
 import javafx.scene.control.Button
 import javafx.scene.layout.BorderPane
 import org.fxmisc.richtext.CodeArea
@@ -14,9 +15,10 @@ class MainView : View() {
     private val buttonRun: Button by fxid()
     private val codeArea: CodeArea by fxid()
 
+    private val jasmin = Jasmin()
+
     init {
         title = "Jasmin"
-        primaryStage.isMaximized = true
 
         codeArea.paragraphGraphicFactory = LineNumberFactory.get(codeArea)
         codeArea.richChanges()
@@ -26,7 +28,13 @@ class MainView : View() {
                 }
 
         buttonRun.action {
+            jasmin.reset()
+            println()
             println("Run:\n" + codeArea.text)
+            val code = codeArea.text.lines().toTypedArray()
+            jasmin.parse(code)
+            jasmin.execute(code)
+            printRegisters()
         }
     }
 
@@ -40,5 +48,12 @@ class MainView : View() {
         val spansBuilder = StyleSpansBuilder<S>()
         spansBuilder.f()
         return spansBuilder.create()
+    }
+
+    private fun printRegisters() {
+        println("=== Registers ===")
+        for (reg in jasmin.data.registerSets) {
+            println(reg.E + ": " + reg.aE.getShortcut())
+        }
     }
 }
