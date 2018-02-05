@@ -12,7 +12,7 @@ public class Parser {
     // several other components, needed to call their methods
     private final DataSpace dataspace;
     private final CommandLoader commandLoader;
-    //public JasDocument doc;
+    public Jasmin jasmin;
 
     // when the whole program is executed, commands and parameters are cached to
     // greatly improve execution speed in loops and frequently called subroutines
@@ -20,10 +20,10 @@ public class Parser {
     private JasminCommand[] commandCache;
     private boolean[] cached;
 
-    public Parser(DataSpace newDataSpace, CommandLoader cl/*, JasDocument jasDoc*/) {
+    public Parser(DataSpace newDataSpace, CommandLoader cl, Jasmin jasmin) {
         dataspace = newDataSpace;
         commandLoader = cl;
-        //doc = jasDoc;
+        this.jasmin = jasmin;
     }
 
     /**
@@ -598,12 +598,10 @@ public class Parser {
         if (dataspace.isConstant(operand)) {
             return Op.CONST;
         }
-        /* TODO: implement getLabelLine()
         // label (target for jump-commands)
-		if (doc.getLabelLine(operand) != -1) {
+        if (jasmin.getLabelLine(operand) != -1) {
 			return Op.LABEL;
 		}
-		*/
         // size qualifier
         if (pSizeQuali.matcher(operand).matches()) {
             return Op.SIZEQUALI;

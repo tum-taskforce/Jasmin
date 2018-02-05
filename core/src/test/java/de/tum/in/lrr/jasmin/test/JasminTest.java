@@ -1,13 +1,12 @@
 package de.tum.in.lrr.jasmin.test;
 
-import de.tum.in.lrr.jasmin.core.*;
+import de.tum.in.lrr.jasmin.core.Jasmin;
+import de.tum.in.lrr.jasmin.core.RegisterSet;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ParserTest {
+class JasminTest {
     private String[] code = new String[]{
             "mov eax,1",
             "mov ebx,2",
@@ -16,36 +15,11 @@ class ParserTest {
 
     @Test
     void testParser() {
-        DataSpace data = new DataSpace(4096, 0);
-        CommandLoader cmdLoader = new CommandLoader(data, "de.tum.in.lrr.jasmin.commands", JasminCommand.class);
-        System.out.println("Loaded commands: " + Arrays.toString(cmdLoader.getMnemoList()));
-        Parser parser = new Parser(data, cmdLoader);
-
-        data.setParser(parser);
-        RegisterSet[] registers = data.getRegisterSets();
+        Jasmin jas = new Jasmin();
+        RegisterSet[] registers = jas.getData().getRegisterSets();
         printRegisters(registers);
-
-        parser.clearCache(code.length);
-        int line = data.getInstructionPointer();
-        while (line < code.length) {
-            data.setInstructionPointer(line + 1);
-
-            try {
-                ParseError parseError = parser.execute(code[line], null, line);
-                if (parseError != null) {
-                    System.out.println("Error in line " + line + ": " + parseError.errorMsg);
-                    break;
-                }
-            } catch (Exception e) {
-                System.out.println("Error in line " + line);
-                e.printStackTrace();
-                break;
-            }
-
-            line = data.getInstructionPointer();
-        }
-
-        data.updateDirty();
+        jas.parse(code);
+        jas.execute(code);
         printRegisters(registers);
 
         assertRegisterEquals(registers, "eax", 3L);

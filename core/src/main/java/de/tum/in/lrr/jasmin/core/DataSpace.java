@@ -179,6 +179,8 @@ public class DataSpace {
 
     private Hashtable<String, Long> constants;
 
+    private Hashtable<String, Integer> labels;
+
     // //////////////////////////////////////
     // CONSTRUCTORS
 
@@ -208,6 +210,7 @@ public class DataSpace {
     private void initMem(int size, int startAddress) {
         variables = new Hashtable<>();
         constants = new Hashtable<>();
+        labels = new Hashtable<>();
         MEMSIZE = (size + 3) - ((size + 3) % 4);
         memory = new Memory(MEMSIZE, startAddress);
         memAddressStart = startAddress;
@@ -852,10 +855,7 @@ public class DataSpace {
         } else if (type == Op.CHARS) {
             return Parser.getCharsAsNumber(src);
         } else if (type == Op.LABEL) {
-            throw new UnsupportedOperationException();
-            /* TODO: implement getLabelLine()
-            parser.doc.getLabelLine(src);
-			 */
+            return parser.jasmin.getLabelLine(src);
         } else if (type == Op.VARIABLE) {
             return getVariable(src);
         } else if (type == Op.CONST) {
