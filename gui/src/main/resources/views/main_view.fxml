@@ -3,6 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import org.fxmisc.flowless.VirtualizedScrollPane?>
+<?import org.fxmisc.richtext.CodeArea?>
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121"
             xmlns:fx="http://javafx.com/fxml/1">
 
@@ -31,4 +33,11 @@
             </children>
         </VBox>
     </top>
+    <center>
+        <VirtualizedScrollPane>
+            <content>
+                <CodeArea fx:id="codeArea"/>
+            </content>
+        </VirtualizedScrollPane>
+    </center>
 </BorderPane>

@@ -13,7 +13,7 @@
     <artifactId>jasmin-gui</artifactId>
 
     <properties>
-        <kotlin.version>1.2.0</kotlin.version>
+        <kotlin.version>1.2.21</kotlin.version>
     </properties>
 
     <dependencies>
@@ -29,12 +29,12 @@
         <dependency>
             <groupId>no.tornado</groupId>
             <artifactId>tornadofx</artifactId>
-            <version>1.7.12</version>
+            <version>1.7.14</version>
         </dependency>
         <dependency>
             <groupId>org.fxmisc.richtext</groupId>
             <artifactId>richtextfx</artifactId>
-            <version>0.8.1</version>
+            <version>0.8.2</version>
         </dependency>
     </dependencies>
 
