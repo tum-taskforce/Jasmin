@@ -1,0 +1,36 @@
+.code-area {
+    -fx-background-color: #1E1E1E;
+    -fx-text-fill: #D4D4D4;
+    -fx-font-family: Consolas;
+    -fx-font-size: 14px;
+}
+
+.caret {
+    -fx-stroke: #D4D4D4;
+    -fx-stroke-width: 2px;
+    -fx-smooth: false;
+}
+
+.lineno {
+    -fx-background-color: #1E1E1E;
+    -fx-text-fill: #707070;
+    -fx-font-family: Consolas;
+    -fx-font-size: 14px;
+}
+
+.asm-text {
+    -fx-fill: #D4D4D4;
+}
+
+.asm-mnemo {
+    -fx-fill: #569cd6;
+    -fx-font-weight: bold;
+}
+
+.asm-register {
+    -fx-fill: #C586C0;
+}
+
+.asm-number {
+    -fx-fill: #4EC9B0;
+}

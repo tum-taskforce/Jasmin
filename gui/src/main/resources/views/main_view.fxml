@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import org.fxmisc.flowless.VirtualizedScrollPane?>
 <?import org.fxmisc.richtext.CodeArea?>
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121"
@@ -10,34 +9,40 @@
 
     <top>
         <VBox BorderPane.alignment="CENTER">
-            <children>
-                <MenuBar>
-                    <menus>
-                        <Menu mnemonicParsing="false" text="File">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Close"/>
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Delete"/>
-                            </items>
-                        </Menu>
-                    </menus>
-                </MenuBar>
-                <ToolBar prefHeight="40.0" prefWidth="200.0">
-                    <items>
-                        <Button mnemonicParsing="false" text="Run" fx:id="buttonRun"/>
-                    </items>
-                </ToolBar>
-            </children>
+            <MenuBar>
+                <Menu mnemonicParsing="false" text="File">
+                    <MenuItem mnemonicParsing="false" text="Close"/>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <MenuItem mnemonicParsing="false" text="Delete"/>
+                </Menu>
+            </MenuBar>
+            <ToolBar prefHeight="40.0" prefWidth="200.0">
+                <Button fx:id="buttonRun" mnemonicParsing="false" text="Run"/>
+            </ToolBar>
         </VBox>
     </top>
     <center>
         <VirtualizedScrollPane>
             <content>
-                <CodeArea fx:id="codeArea"/>
+                <CodeArea stylesheets="@../style.css" fx:id="codeArea"/>
             </content>
         </VirtualizedScrollPane>
     </center>
+    <left>
+        <VBox prefHeight="535.0" prefWidth="250.0" BorderPane.alignment="CENTER">
+            <TitledPane animated="false" text="Registers">
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="2.0">
+                    <Label text="EAX"/>
+                    <HBox spacing="5.0">
+                        <TextField managed="false" visible="false"/>
+                        <TextField HBox.hgrow="ALWAYS"/>
+                    </HBox>
+                </VBox>
+            </TitledPane>
+            <TitledPane animated="false" text="Status Flags">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+            </TitledPane>
+        </VBox>
+    </left>
 </BorderPane>

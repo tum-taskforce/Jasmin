@@ -7,12 +7,13 @@ import java.util.Map;
 public class Jasmin {
     private final DataSpace data;
     private final Parser parser;
+    private final CommandLoader cmdLoader;
 
     private Map<String, Integer> labels = new HashMap<>();
 
     public Jasmin() {
         data = new DataSpace(4096, 0);
-        CommandLoader cmdLoader = new CommandLoader(data, "de.tum.in.lrr.jasmin.commands", JasminCommand.class);
+        cmdLoader = new CommandLoader(data, "de.tum.in.lrr.jasmin.commands", JasminCommand.class);
         System.out.println("Loaded commands: " + Arrays.toString(cmdLoader.getMnemoList()));
         parser = new Parser(data, cmdLoader, this);
         data.setParser(parser);
@@ -29,7 +30,7 @@ public class Jasmin {
 
         String lastLabel = null;
         for (int i = 0; i < code.length; i++) {
-            ParseResult res = parser.parse(code[i], lastLabel);
+            ParseResult res = parser.parse(code[i], lastLabel); //results are cached in the parser
             if (res.label != null) {
                 labels.put(res.label, i);
                 lastLabel = res.labelOnly ? res.label : null;
@@ -45,7 +46,7 @@ public class Jasmin {
             data.setInstructionPointer(line + 1);
 
             try {
-                ParseError parseError = parser.execute(code[line], null, line);
+                ParseError parseError = parser.execute(code[line], null, line); //load ParseResult from cache
                 if (parseError != null) {
                     System.out.println("Error in line " + line + ": " + parseError.errorMsg);
                     break;
@@ -68,5 +69,9 @@ public class Jasmin {
 
     public DataSpace getData() {
         return data;
+    }
+
+    public String[] getMnemos() {
+        return cmdLoader.getMnemoList();
     }
 }
