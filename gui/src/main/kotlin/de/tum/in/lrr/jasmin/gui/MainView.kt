@@ -22,12 +22,18 @@ class MainView : View() {
     private val pattern by lazy {
         val mnemos = "\\b(" + jasmin.mnemos.joinToString("|") + ")\\b"
         val registers = "\\b(" + DataSpace.getRegisterList().joinToString("|") + ")\\b"
-        val numbers = "\\b(\\d+|0x(\\d|[a-f])+)\\b"
+        val sizes = "\\b(BYTE|WORD|DWORD|QWORD)\\b"
+        val numbers = "\\b(\\-?d+|0x[0-9a-f]+)\\b"
+        val comments = "(;.+)$"
+        val labels = "^(\\w+:)"
         Pattern.compile("""
             (?<MNEMO>$mnemos)|
             (?<REGISTER>$registers)|
-            (?<NUMBER>$numbers)
-        """.trimIndent().replace("\n", ""), Pattern.CASE_INSENSITIVE)
+            (?<SIZE>$sizes)|
+            (?<NUMBER>$numbers)|
+            (?<COMMENT>$comments)|
+            (?<LABEL>$labels)
+        """.trimIndent().replace("\n", ""), Pattern.CASE_INSENSITIVE or Pattern.MULTILINE)
     }
 
     init {
@@ -59,7 +65,10 @@ class MainView : View() {
                 val styleClass = when {
                     matcher.group("MNEMO") != null -> "asm-mnemo"
                     matcher.group("REGISTER") != null -> "asm-register"
+                    matcher.group("SIZE") != null -> "asm-size"
                     matcher.group("NUMBER") != null -> "asm-number"
+                    matcher.group("COMMENT") != null -> "asm-comment"
+                    matcher.group("LABEL") != null -> "asm-label"
                     else -> "asm-text"
                 }
                 add(listOf("asm-text"), matcher.start() - last)

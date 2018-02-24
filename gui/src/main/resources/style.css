@@ -31,6 +31,19 @@
     -fx-fill: #C586C0;
 }
 
+.asm-size {
+    -fx-fill: #6b6d9f;
+}
+
 .asm-number {
-    -fx-fill: #4EC9B0;
+    -fx-fill: #4ebba2;
+}
+
+.asm-comment {
+    -fx-fill: #608b4e;
+}
+
+.asm-label {
+    -fx-fill: #d7976a;
+    -fx-font-weight: bold;
 }
