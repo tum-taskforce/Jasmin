@@ -23,7 +23,7 @@ class MainView : View() {
         val mnemos = "\\b(" + jasmin.mnemos.joinToString("|") + ")\\b"
         val registers = "\\b(" + DataSpace.getRegisterList().joinToString("|") + ")\\b"
         val sizes = "\\b(BYTE|WORD|DWORD|QWORD)\\b"
-        val numbers = "\\b(\\-?d+|0x[0-9a-f]+)\\b"
+        val numbers = "\\b(-?\\d+|0x[0-9a-f]+)\\b"
         val comments = "(;.+)$"
         val labels = "^(\\w+:)"
         Pattern.compile("""

@@ -1,21 +1,18 @@
-.code-area {
+.code-area, .lineno {
+    -fx-highlight-fill: #0f519c;
     -fx-background-color: #1E1E1E;
-    -fx-text-fill: #D4D4D4;
     -fx-font-family: Consolas;
     -fx-font-size: 14px;
+}
+
+.lineno {
+    -fx-text-fill: #707070;
 }
 
 .caret {
     -fx-stroke: #D4D4D4;
     -fx-stroke-width: 2px;
     -fx-smooth: false;
-}
-
-.lineno {
-    -fx-background-color: #1E1E1E;
-    -fx-text-fill: #707070;
-    -fx-font-family: Consolas;
-    -fx-font-size: 14px;
 }
 
 .asm-text {
