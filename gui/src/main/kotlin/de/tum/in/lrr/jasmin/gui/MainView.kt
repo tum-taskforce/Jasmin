@@ -3,6 +3,8 @@ package de.tum.`in`.lrr.jasmin.gui
 import de.tum.`in`.lrr.jasmin.core.DataSpace
 import de.tum.`in`.lrr.jasmin.core.Jasmin
 import javafx.scene.control.Button
+import javafx.scene.control.CheckBox
+import javafx.scene.control.TextField
 import javafx.scene.layout.BorderPane
 import org.fxmisc.richtext.CodeArea
 import org.fxmisc.richtext.LineNumberFactory
@@ -16,6 +18,22 @@ class MainView : View() {
     override val root: BorderPane by fxml("/views/main_view.fxml")
     private val buttonRun: Button by fxid()
     private val codeArea: CodeArea by fxid()
+
+    private val inputRegA: TextField by fxid()
+    private val inputRegB: TextField by fxid()
+    private val inputRegC: TextField by fxid()
+    private val inputRegD: TextField by fxid()
+    private val registerInputs = mapOf(
+            "EAX" to inputRegA,
+            "EBX" to inputRegB,
+            "ECX" to inputRegC,
+            "EDX" to inputRegD
+    )
+
+    private val checkZero: CheckBox by fxid()
+    private val checkSign: CheckBox by fxid()
+    private val checkCarry: CheckBox by fxid()
+    private val checkOverflow: CheckBox by fxid()
 
     private val jasmin = Jasmin()
 
@@ -54,7 +72,31 @@ class MainView : View() {
             jasmin.parse(code)
             jasmin.execute(code)
             printRegisters()
+            updateRegistersAndFlags()
         }
+
+        registerInputs.forEach { name, input ->
+            input.textProperty().addListener { _, _, newValue ->
+                val value = newValue.toLongOrNull() ?: return@addListener
+                val address = jasmin.data.getRegisterArgument(name)
+                jasmin.data.put(value, address, null)
+            }
+        }
+
+        checkZero.selectedProperty().addListener { _, _, newValue -> jasmin.data.fZero = newValue }
+        checkSign.selectedProperty().addListener { _, _, newValue -> jasmin.data.fSign = newValue }
+        checkCarry.selectedProperty().addListener { _, _, newValue -> jasmin.data.fCarry = newValue }
+        checkOverflow.selectedProperty().addListener { _, _, newValue -> jasmin.data.fOverflow = newValue }
+    }
+
+    private fun updateRegistersAndFlags() {
+        registerInputs.forEach { name, input ->
+            input.text = jasmin.data.getRegisterArgument(name).getShortcut().toString()
+        }
+        checkZero.isSelected = jasmin.data.fZero
+        checkSign.isSelected = jasmin.data.fSign
+        checkCarry.isSelected = jasmin.data.fCarry
+        checkOverflow.isSelected = jasmin.data.fOverflow
     }
 
     private fun computeHighlighting(text: String): StyleSpans<Collection<String>> {

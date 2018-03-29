@@ -25,7 +25,7 @@
     <center>
         <VirtualizedScrollPane>
             <content>
-                <CodeArea stylesheets="@../style.css" fx:id="codeArea"/>
+                <CodeArea fx:id="codeArea" stylesheets="@../style.css"/>
             </content>
         </VirtualizedScrollPane>
     </center>
@@ -34,14 +34,22 @@
             <TitledPane animated="false" text="Registers">
                 <VBox prefHeight="200.0" prefWidth="100.0" spacing="2.0">
                     <Label text="EAX"/>
-                    <HBox spacing="5.0">
-                        <TextField managed="false" visible="false"/>
-                        <TextField HBox.hgrow="ALWAYS"/>
-                    </HBox>
+                    <TextField fx:id="inputRegA" text="0" HBox.hgrow="ALWAYS"/>
+                    <Label text="EBX"/>
+                    <TextField fx:id="inputRegB" text="0" HBox.hgrow="ALWAYS"/>
+                    <Label text="ECX"/>
+                    <TextField fx:id="inputRegC" text="0" HBox.hgrow="ALWAYS"/>
+                    <Label text="EDX"/>
+                    <TextField fx:id="inputRegD" text="0" HBox.hgrow="ALWAYS"/>
                 </VBox>
             </TitledPane>
             <TitledPane animated="false" text="Status Flags">
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                <VBox spacing="2.0">
+                    <CheckBox fx:id="checkZero" text="Zero"/>
+                    <CheckBox fx:id="checkSign" text="Sign"/>
+                    <CheckBox fx:id="checkCarry" text="Carry"/>
+                    <CheckBox fx:id="checkOverflow" text="Overflow"/>
+                </VBox>
             </TitledPane>
         </VBox>
     </left>
